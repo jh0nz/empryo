@@ -1,0 +1,11 @@
+{
+  "version": "3.9.4-beta",
+  "cli": {
+    "x86_64-linux": "sha256-Ta6R8voMX83O+f8HVCAg4bVGR//jDl78SW3Lxw0HTsI=",
+    "aarch64-linux": "sha256-cLbkTJADDkLA4U3RXbRnBQGiEKo4VYrKp2nWd9u1vYk="
+  },
+  "desktop": {
+    "x86_64-linux": "sha256-DCKQBz1EmxH8fPNOi/4R7VgYw14yvMXtr7sEJgvLTjs=",
+    "aarch64-linux": "sha256-Rrn0MyvfH/ELoUgLqfBe3886P2I2G03j0tvHEv7nnas="
+  }
+}

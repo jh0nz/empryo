@@ -1,0 +1,59 @@
+name: Update Nix flake
+
+# Tracks the closed-source Empryo releases published at dl.empryo.com and
+# keeps nix/sources.json (version + hashes) current. Runs daily, or on demand
+# from the Actions tab ("Run workflow").
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Pin a specific version (default: latest)"
+        required: false
+
+concurrency:
+  group: update-nix
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
+      - name: Resolve latest release (signature-verified)
+        run: nix develop -c nix/update.sh ${{ inputs.version }}
+
+      - name: Detect changes
+        id: diff
+        run: |
+          if git diff --quiet -- nix/sources.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "version=$(jq -r .version nix/sources.json)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build packages
+        if: steps.diff.outputs.changed == 'true'
+        run: nix build .#empryo .#empryo-desktop --print-build-logs
+
+      - name: Commit and push
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add nix/sources.json
+          git commit -m "chore(nix): update empryo to ${{ steps.diff.outputs.version }}"
+          git push
