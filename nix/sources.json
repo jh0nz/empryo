@@ -1,11 +1,11 @@
 {
-  "version": "3.12.0-beta",
+  "version": "3.12.1-beta",
   "cli": {
-    "x86_64-linux": "sha256-z957xnv9BLjwrZVMqImw1HXM597geRYYQHFfHY3iIyg=",
-    "aarch64-linux": "sha256-ObEYEtLI9Ag1ruDUX9s7utq+gsfd4rOToGtgJHLrCJs="
+    "x86_64-linux": "sha256-JEOV26V9IOwudO0yfIQGyh+iZXWt4SkHJfMfpL6hqDQ=",
+    "aarch64-linux": "sha256-JKJgwqHovixgWiXfwuSQqcJlO7vu9Y9BWsWoa8bAX6M="
   },
   "desktop": {
-    "x86_64-linux": "sha256-n64E4fuluNqEtcmUudGdIZDsVMagACi/seHT6mg+y0o=",
-    "aarch64-linux": "sha256-qk3SmFu9r03vc2eaoPvciWA/7fNGlVVu0wcpz9JVh1A="
+    "x86_64-linux": "sha256-KUW8lRRiq/Jt3hP2R6/dunZt9Sr/PSxkJc4ohjqhI/E=",
+    "aarch64-linux": "sha256-mNRmJzsLm0CAf3rQL8wIyl+LEB1TG46Qg7Xbuw5vNrs="
   }
 }
